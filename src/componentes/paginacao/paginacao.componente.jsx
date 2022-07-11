@@ -1,4 +1,10 @@
 import "./paginacao.css";
+import { useState } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  nextPageCharacters,previousPageCharacters
+} from "../../actions/index";
 
 
 /**
@@ -9,18 +15,47 @@ import "./paginacao.css";
  *
  * @returns Elemento JSX
  */
-const Paginacao = () => {
+const Paginacao = ({nextPageCharacters,previousPageCharacters}) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const newPage = () => nextPageCharacters(currentPage);
+
+  function changeNextPage() {
+    setCurrentPage(page=> Math.min(page+1, 42));
+    newPage();
+    console.log({currentPage})
+  }
+
+  const previousPage = () => previousPageCharacters(currentPage);
+
+  function changePreviousPage() {
+    setCurrentPage(page => Math.max(page - 1, 1));
+    previousPage();
+    console.log({currentPage});
+
+  }
+
+
   return (
     <div className="paginacao">
-      <button disabled={true} className={"primary"}>
+      <button onClick={changePreviousPage} disabled={false} className={"primary"}>
         Anterior
       </button>
-      <button disabled={false} className={"primary"}>
+      <button onClick={changeNextPage} disabled={false} className={"primary"}>
         Próximo
       </button>
     </div>
   );
 };
 
+const mapStateToProps = (state) => ({
+  characters: state.characters,
+})
 
-export default Paginacao;
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  nextPageCharacters, previousPageCharacters,
+}, dispatch);
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Paginacao);

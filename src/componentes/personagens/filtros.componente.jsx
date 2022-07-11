@@ -16,7 +16,6 @@ const Filtros = ({characters,filterCharactersStart,fetchCharactersStart}) => {
     if (!searchText) {
       fetchCharactersStart();
     } else {
-      console.log({searchText})
       filterCharactersStart(searchText);
     }
   }

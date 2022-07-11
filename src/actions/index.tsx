@@ -30,3 +30,17 @@ export function filterCharactersStart(searchText:string) {
       payload:characters,
     };
   }
+
+
+ export function nextPageCharacters(page: number) {
+    return {
+      type: "NEXT_PAGE_CHARACTERS",
+      payload: page,
+    };
+  }
+  export function previousPageCharacters(page: number) {
+    return {
+      type: "PREVIOUS_PAGE_CHARACTERS",
+      payload: page,
+    };
+  }

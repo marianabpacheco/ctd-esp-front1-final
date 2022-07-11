@@ -21,6 +21,7 @@ function CardPersonagem({ characters, fetchCharactersStart, filterCharactersStar
         <span>Carregando...</span>
       ) : (
         <>
+
           {
             characters.characters.map(character => (
               <div className="card-personagem" key={character.id}>
@@ -30,7 +31,7 @@ function CardPersonagem({ characters, fetchCharactersStart, filterCharactersStar
                 />
                 <div className="card-personagem-body">
                   <span>{character.name}</span>
-                  {/* <BotaoFavorito isFavorito={false} /> */}
+                  <BotaoFavorito  />
                 </div>
 
               </div>
