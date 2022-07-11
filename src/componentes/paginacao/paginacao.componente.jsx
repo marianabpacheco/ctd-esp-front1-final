@@ -1,5 +1,6 @@
 import "./paginacao.css";
 
+
 /**
  * Componente que contém os botões para paginar
  *
@@ -20,5 +21,6 @@ const Paginacao = () => {
     </div>
   );
 };
+
 
 export default Paginacao;

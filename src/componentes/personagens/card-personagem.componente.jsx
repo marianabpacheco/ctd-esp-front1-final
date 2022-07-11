@@ -1,5 +1,9 @@
 import BotaoFavorito from "../botoes/botao-favorito.componente";
 import "./card-personagem.css";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchCharactersStart, filterCharactersStart } from '../../actions/index';
+import { useEffect } from "react";
 
 /**
  * Card para cada personagem dentro da grade de personagem.
@@ -9,19 +13,40 @@ import "./card-personagem.css";
  *
  * @returns Elemento JSX
  */
-const CardPersonagem = () => {
+function CardPersonagem({ characters, fetchCharactersStart, filterCharactersStart }) {
+  useEffect(() => fetchCharactersStart(), [fetchCharactersStart]);
   return (
-    <div className="card-personagem">
-      <img
-        src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-        alt="Rick Sanchez"
-      />
-      <div className="card-personagem-body">
-        <span>Rick Sanchez</span>
-        <BotaoFavorito isFavorito={false} />
-      </div>
-    </div>
-  );
-};
+    <>{
+      characters.isFetching ? (
+        <span>Carregando...</span>
+      ) : (
+        <>
+          {
+            characters.characters.map(character => (
+              <div className="card-personagem" key={character.id}>
+                <img
+                  src={character.image}
+                  alt={character.name}
+                />
+                <div className="card-personagem-body">
+                  <span>{character.name}</span>
+                  {/* <BotaoFavorito isFavorito={false} /> */}
+                </div>
 
-export default CardPersonagem;
+              </div>
+            ))}
+        </>)}
+    </>
+  );
+}
+
+const mapStateToProps = (state) => ({
+  characters: state.characters,
+})
+
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchCharactersStart, filterCharactersStart,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardPersonagem);
